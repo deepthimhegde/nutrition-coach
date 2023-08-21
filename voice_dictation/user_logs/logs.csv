@@ -1,0 +1,42 @@
+datetime,role,content
+2023-08-18 21:26:26.494665,user,"Hey, I want to log what I had. Slight back spasm. Pasta and some sweet potato fries for dinner today."
+2023-08-18 21:26:26.494665,assistant,What is the approximate quantity of pasta you had for dinner today?
+2023-08-18 21:26:26.494665,user,Thank you. I had one cup of fusilli pasta with about six to eight cherry tomatoes and one bunch of asparagus. Proceed.
+2023-08-18 21:26:26.494665,assistant,What is the approximate quantity of sweet potato fries you had for dinner today?
+2023-08-18 21:26:26.494665,user,I ate one cup. Proceed.
+2023-08-18 21:26:26.494665,assistant,"{
+    ""dishes"": [
+        {
+            ""dish"": ""Pasta"",
+            ""ingredients"": [
+                {
+                    ""ingredient"": ""Fusilli Pasta"",
+                    ""quantity"": ""1 cup"",
+                    ""calorie_count"": 200
+                },
+                {
+                    ""ingredient"": ""Cherry Tomatoes"",
+                    ""quantity"": ""6-8"",
+                    ""calorie_count"": 25
+                },
+                {
+                    ""ingredient"": ""Asparagus"",
+                    ""quantity"": ""1 bunch"",
+                    ""calorie_count"": 90
+                }
+            ],
+            ""total_calorie_count"": 315
+        },
+        {
+            ""dish"": ""Sweet Potato Fries"",
+            ""ingredients"": [
+                {
+                    ""ingredient"": ""Sweet Potato Fries"",
+                    ""quantity"": ""1 cup"",
+                    ""calorie_count"": 180
+                }
+            ],
+            ""total_calorie_count"": 180
+        }
+    ]
+}"
