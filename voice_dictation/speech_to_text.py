@@ -3,7 +3,7 @@ import openai
 from prompt_lib import PromptCollection
 import time
 import utils
-import csv
+from datetime import datetime
 
 # Load the secrets YAML file
 import yaml
@@ -50,6 +50,38 @@ def get_message_intent(user_text_message: str):
         if intent_class.lower().find(intent) > 0:
             return intent
     return "other"
+
+def get_implicit_meal_type():
+    current_time = datetime.now()
+    # Define the time ranges for each meal type
+    meal_ranges = {
+        "breakfast": ((6, 0), (10, 0)),   # 6:00 AM - 10:00 AM
+        "brunch" : ((11, 0), (12, 0)),   # 11:00 AM - 12:00 PM
+        "lunch": ((12, 1), (14, 0)),      # 12:00 PM - 2:00 PM
+        "dinner": ((17, 0), (20, 0)),     # 5:00 PM - 8:00 PM
+    }
+
+    # Parse the current time to extract the hour and minute
+    hour, minute = current_time.hour, current_time.minute
+
+    # Check the time to determine the meal type
+    for meal_type, (start_time, end_time) in meal_ranges.items():
+        if start_time <= (hour, minute) <= end_time:
+            return meal_type
+    # return snack if the meal type doesn't fall under any other time bucket
+    return "snack"
+
+# def get_explicit_meal_type(conversation: str):
+#     meal_type_prompt = PromptCollection.EXTRACT_MEAL_TYPE.replace("{context}", conversation)
+#     meal_type_messages = load_message_context(meal_type_prompt)
+#     return generate_response(openai_api_key, messages=meal_type_messages)
+
+def get_meal_type(conversation):
+    detected_meal_types = utils.find_meal_keywords(conversation)
+    if len(detected_meal_types) != 1:  # If no meal type was detected or more than 1 were detected, resort to implicit 
+        return get_implicit_meal_type()
+    else:
+        return detected_meal_types
 
 def answer_questions_from_logs(question: str, log_file_path: str='./user_logs/logs.csv'):
     logs = utils.get_user_log_contents(log_file_path)
@@ -121,15 +153,17 @@ def main():
     print('*******')
     # print(logger_messages)
 
+    logger_messages_without_system_message = logger_messages[1:]
+    # Extract meal-type
+    meal_type = get_meal_type(str(logger_messages_without_system_message))
+    print(f"Meal type: {meal_type}")
+
     # ----- Log chat messages to database -----
     # Create CSV once per user
     if task_intent == "log":
         # Reset logs 
         # utils.create_csv('./user_logs/logs.csv', ['datetime', 'role', 'content'])
-        logger_messages_without_system_message = logger_messages[1:]
         utils.write_rows_to_csv('./user_logs/logs.csv', logger_messages_without_system_message)
-
-
 
 
 if __name__ == "__main__":

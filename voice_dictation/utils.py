@@ -2,6 +2,7 @@ import re
 import csv
 from datetime import datetime
 from typing import List
+import re
 
 def get_last_assistant_message(messages: List[dict]):
     return [msg for msg in messages if msg['role'] == 'assistant'][-1]
@@ -29,3 +30,13 @@ def get_user_log_contents(file_name: str):
         for row in csv_reader:
             contents += '\n' + row[1] + ': ' + row[-1]
     return contents
+
+def find_meal_keywords(text):
+    keywords = ['breakfast', 'brunch', 'lunch', 'dinner']
+    found_keywords = []
+
+    for keyword in keywords:
+        if re.search(r'\b' + keyword + r'\b', text, re.IGNORECASE):
+            found_keywords.append(keyword)
+    return found_keywords
+
