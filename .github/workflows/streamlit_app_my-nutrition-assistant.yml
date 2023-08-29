@@ -51,6 +51,10 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
+      - name: Install linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install portaudio19-dev
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
