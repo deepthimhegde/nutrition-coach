@@ -41,7 +41,7 @@ def generate_response(openai_api_key, messages=None, model="gpt-3.5-turbo"):
 #         print("Sorry, I'm having trouble right now, please try again")
 #     return incomplete_classification
 
-def get_message_intent(user_text_message: str):
+def get_message_intent(openai_api_key: str, user_text_message: str):
     classes = ["log", "retrieve", "other"]
     intent_messages = load_message_context(PromptCollection.INTENT_CLASSIFICATION)
     intent_messages.append({"role": "user", "content": user_text_message})
@@ -83,7 +83,7 @@ def get_meal_type(conversation):
     else:
         return detected_meal_types
 
-def answer_questions_from_logs(question: str, log_file_path: str='./user_logs/logs.csv'):
+def answer_questions_from_logs(openai_api_key: str, question: str, log_file_path: str='./user_logs/logs.csv'):
     logs = utils.get_user_log_contents(log_file_path)
     qna_prompt = PromptCollection.ANSWER_QUESTION.replace("{context}", logs)
     qna_messages = load_message_context(qna_prompt)
@@ -132,7 +132,7 @@ def main():
 
         # Check intent of first message
         if len(task_intent) == 0:  # no messages exchanged so far
-            task_intent = get_message_intent(edited_transcript)
+            task_intent = get_message_intent(openai_api_key, edited_transcript)
             print(f"~~~Intent detected: {task_intent}")
 
         if task_intent == "log":
@@ -143,7 +143,7 @@ def main():
             print(system_response)
             print('-------------')
         elif task_intent == "retrieve":
-            system_response = answer_questions_from_logs(edited_transcript)
+            system_response = answer_questions_from_logs(openai_api_key, edited_transcript)
             print(f"Answer: {system_response}")
         else:
             # TODO: Call default chat completion
@@ -167,4 +167,4 @@ def main():
 
 
 if __name__ == "__main__":
-     main()
+    main()
