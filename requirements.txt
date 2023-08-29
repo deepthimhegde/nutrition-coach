@@ -1,4 +1,5 @@
 git+https://github.com/openai/whisper.git
+pyaudio
 whisper-mic
 streamlit 
 streamlit-chat
