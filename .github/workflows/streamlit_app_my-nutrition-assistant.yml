@@ -23,8 +23,7 @@ jobs:
           python-version: '3.11'
       - name: Install linux dependencies
         run: |
-          sudo apt update && sudo apt install ffmpeg
-          sudo apt install portaudio19-dev python3-pyaudio
+          sudo apt update && sudo apt install -y ffmpeg portaudio19-dev python3-pyaudio
       - name: Create and start virtual environment
         run: |
           python -m venv venv
@@ -53,8 +52,7 @@ jobs:
     steps:
       - name: Install linux dependencies
         run: |
-          sudo apt update && sudo apt install ffmpeg
-          sudo apt install portaudio19-dev python3-pyaudio
+          sudo apt update && sudo apt install -y ffmpeg portaudio19-dev python3-pyaudio
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
