@@ -1,6 +1,5 @@
 import streamlit as st
 import openai
-import speech_to_text
 import speech_recognition as sr
 from prompt_lib import PromptCollection
 from generate_response import get_edited_transcript, generate_response, load_message_context

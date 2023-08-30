@@ -26,10 +26,7 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-      - name: Install linux dependencies
-        run: |
-          sudo apt update && sudo apt install ffmpeg
-          sudo apt install portaudio19-dev python3-pyaudio
+
       - name: Install dependencies
         run: pip install -r requirements.txt
         
@@ -51,10 +48,6 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Install linux dependencies
-        run: |
-          sudo apt update && sudo apt install ffmpeg
-          sudo apt install portaudio19-dev python3-pyaudio
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
