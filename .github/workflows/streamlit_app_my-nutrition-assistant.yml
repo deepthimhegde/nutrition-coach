@@ -28,7 +28,7 @@ jobs:
           source venv/bin/activate
       - name: Install linux dependencies
         run: |
-          sudo apt-get update
+          sudo apt update && sudo apt install ffmpeg
           sudo apt install portaudio19-dev python3-pyaudio
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -53,7 +53,7 @@ jobs:
     steps:
       - name: Install linux dependencies
         run: |
-          sudo apt-get update
+          sudo apt update && sudo apt install ffmpeg
           sudo apt install portaudio19-dev python3-pyaudio
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
