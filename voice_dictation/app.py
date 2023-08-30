@@ -4,10 +4,12 @@ import speech_recognition as sr
 from prompt_lib import PromptCollection
 from generate_response import get_edited_transcript, generate_response, load_message_context
 import utils
+import yaml
+import os
 
 # Load the secrets YAML file
-import yaml
-with open('secrets.yaml', 'r') as file:
+dir = os.path.join(os.path.dirname(__file__))
+with open(dir+'/secrets.yaml', 'r') as file:
     secrets = yaml.safe_load(file)
 # Set OpenAI API key from Streamlit secrets
 openai.api_key = secrets['ACCESS_TOKENS']['OPENAI']
